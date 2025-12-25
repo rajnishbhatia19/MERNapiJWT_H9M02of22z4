@@ -39,7 +39,7 @@ app.use("/api/users", require("./routes/userRoutes"));
 app.use(errorHandler);
 
 //To manage all routes neatly, we'll create a routes folder
-
+//To run the code after node, bcrypt, express, mongoose, dotenv are installed use node server.js
 app.listen(port, ()=>{
-    console.log(`Server running on port ${port}`)
+    console.log(`Server running on port ${port}`);
 })

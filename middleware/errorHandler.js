@@ -4,6 +4,7 @@ const { constants } = require("../constants");
 const errorHandler = (err,req,res,next) => {
     // Pass the Status Code back if we have it or send 500 if nothing is passed
     const statusCode = res.statusCode ? res.statusCode : 500; 
+    console.log(err.stack);
     switch (statusCode) {
 
         // case 400: // Created a constants file to import all the constant object values
