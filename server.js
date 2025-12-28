@@ -6,11 +6,23 @@ const express = require("express");
 const errorHandler = require("./middleware/errorHandler");
 const connectDb = require("./config/dbConnection");
 const dotenv = require("dotenv").config();
+const cors = require("cors");
+
+//Connect to database
 
 connectDb();
 const app = express();
-
 const port = process.env.PORT || 5000;
+
+//To allow cross origin requests from react client - Setting up cors config middleware
+app.use(cors({
+    origin: 'http://localhost:3000', // React app domain
+    methods: ['GET','POST','PUT','DELETE', 'PATCH'], // Methods allowed
+    allowedHeaders: ['Content-Type','Authorization'], // Headers allowed
+    preflightContinue: false,
+    optionsSuccessStatus: 204
+}));
+
 
 //Provide a route so thunder client sees a route rather than Status: 404 Not Found
 

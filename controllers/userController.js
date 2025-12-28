@@ -19,7 +19,7 @@ const registerUser = asyncHandler(async (req, res) => {
     const userAvaialable = await User.findOne({email});
     if (userAvaialable) {
         res.status(400); 
-        throw new Error("User already registered!");
+        throw new Error("User already registered!" );
     }
 
     // Hash the password using bcrypt - So import it 
@@ -32,7 +32,7 @@ const registerUser = asyncHandler(async (req, res) => {
     });
     console.log(`User created`, {user});
     if(user) {
-        res.status(201).json({_id: user.id, email: user.email}); // 201 resouce created
+        res.status(201).json({_id: user.id, username: user.username, email: user.email}); // 201 resouce created
     }
     else{
         res.status(400);

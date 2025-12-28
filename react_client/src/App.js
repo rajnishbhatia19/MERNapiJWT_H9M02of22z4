@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
-import axios from "axios";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 /* React Front-End Inspired by: 
 https://www.geeksforgeeks.org/reactjs/how-to-develop-user-registration-form-in-reactjs/
@@ -18,17 +19,20 @@ function App() {
   const [confirmPassword,setConfirmPassword] = useState(""); 
   const [successMessage, setSuccessMessage] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
 
   
 
 const handleSubmit = async (event) => {
-    // First clear any previous messages
+  event.preventDefault(); // Prevent form submission from reloading the page
+
+  // First clear any previous messages
     setSuccessMessage("");
     setError("");
 
 
-    event.preventDefault();
+    
     // validation checks
     if (!username || !email || !password || !confirmPassword) {
       setError("All fields are required.");
@@ -58,22 +62,32 @@ const handleSubmit = async (event) => {
 
 
     const userData = {
-      username: username,
-      email: email,
+      username: username.toLowerCase(),
+      email: email.toLowerCase(),
       password: password,
     };
 
-
+    try {
+/* Both methods work to post data to backend
+      axios({
+        url:'http://localhost:5001/api/users/register',
+        method: 'POST',
+        data: userData
+      }).then((response)=>{
+        setSuccessMessage(`Registration successful! User ID: ${response.data._id}, Email: ${response.data.email}`); 
+      }).catch((err)=>{
+           setError(`User Registration failed:`);}); */
     const response = await axios.post('http://localhost:5001/api/users/register', userData);
-    setSuccessMessage(`Registration successful! User ID: ${response.data._id}, Email: ${response.data.email}`);
+    // setSuccessMessage(`Registration successful! User ID: ${response.data._id}, Email: ${response.data.email}`);
+    setSuccessMessage(`Registration successful for ${response.data.email}`);
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.message) {
+        setError(`Registration failed: ${err.response.data.message}`);
+      } else {
+        setError(`Registration failed: An unexpected error occurred. ${err.message}`);
+      }
+    };
   };
-
-
-
-
-
-
-
 
 
 
@@ -87,6 +101,8 @@ const handleSubmit = async (event) => {
         <button type="submit" className="submit-button" onClick={handleSubmit}>Register New User</button>
         {successMessage.length !== 0 ? <h2 className="success information-label">{successMessage}</h2> : <> </> } 
         {error.length !== 0 ? <h2 className="error information-label">{error}</h2> : <> </> }
+        <br />
+        <button type="submit" className="submit-button" onClick={()=>{navigate("/Login")}}>Already Registered? Login Here</button>        
       </div>
   );
 
