@@ -1,0 +1,53 @@
+.app{
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: antiquewhite;
+    .input-field{
+        outline: none;
+        margin-bottom: 20px;
+        width: 30vw;
+        height: 40px;
+        font-size: large;
+        padding-left: 10px;
+        border-radius: 10px;
+        border: 1px solid rgba(220, 220, 220, 0.536);
+
+        &:focus{
+            border: 2px solid black;
+        }
+    }
+
+    .submit-button{
+        width: 22vw;
+        height: 40px;
+        font-size: large;
+        border-radius: 10px;
+        border: none;
+        background-color: teal;
+        color: white;
+        cursor: pointer;
+
+        &:hover{
+            background-color: darkcyan;
+        }
+    }
+
+    .information-label{
+        font-size: 26px;
+        margin-top: 20px;
+    }
+
+    .success{
+        color: green;
+    }
+
+    .error{
+        color: red;
+    }
+}
