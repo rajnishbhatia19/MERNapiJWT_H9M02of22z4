@@ -13,9 +13,7 @@ function Main() {
     const user = localStorage.getItem("username");
     const [totalContacts, setTotalContacts] = useState(localStorage.getItem("totalContacts"));
     const [username, setUsername] = useState(localStorage.getItem("username"));
- //   var runonce = true;
-//    var totalContacts = localStorage.getItem("totalContacts");
-
+    
     // Fetch user details if not already present
     useEffect(() =>{
         try { 
@@ -36,9 +34,9 @@ function Main() {
             axios.get(`http://localhost:5001/api/contacts`, {headers: {'Authorization': `Bearer ${token}`}})
             .then((axiosresponse) => {console.log("Total Contacts Response: ", axiosresponse.data);
             localStorage.setItem("totalContacts", axiosresponse.data.length);
-           // runonce = false;
             });
             setSuccessMessage(`Successfully Fetched Contacts for ${localStorage.getItem("username")}`);
+            navigate('/ContactList');
         } catch (err) {
             setError(`Could not fetch contact count`);
         }
