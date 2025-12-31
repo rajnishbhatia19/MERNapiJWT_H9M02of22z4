@@ -63,7 +63,7 @@ let submitForm = async (event) => {
   return (
 <div>
       <section className="edit-contact p-3">
-        <pre>{JSON.stringify(state.contact)}</pre>
+        {/* <pre>{JSON.stringify(state.contact)}</pre> */}
         <div className="container">
           <div className="row">
             <div className="col">
