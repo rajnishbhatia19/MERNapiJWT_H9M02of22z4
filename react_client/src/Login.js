@@ -59,8 +59,8 @@ function Login() {
         <br />
         <h1>Existing User Login</h1>
         <br />
-        <input type="email"className="input-field"  placeholder="Email" value={email} onChange={(event) => setEmail(event.target.value)} /><br />
-        <input type="password" className="input-field" placeholder="Password" value={password} onChange={(event) => setPassword(event.target.value)} /><br />
+        <input type="email" name="email"className="input-field" autoComplete='true' placeholder="Email" value={email} onChange={(event) => setEmail(event.target.value)} /><br />
+        <input type="password" name="password" className="input-field" placeholder="Password" value={password} onChange={(event) => setPassword(event.target.value)} /><br />
         <button className="submit-button" onClick={() => handleSubmit()}>Login</button>
         {successMessage.length !== 0 ? <h2 className="success information-label">{successMessage}</h2> : <> </> } 
         {error.length !== 0 ? <h2 className="error information-label">{error}</h2> : <> </> }

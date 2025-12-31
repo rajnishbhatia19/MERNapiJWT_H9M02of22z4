@@ -1,12 +1,14 @@
 import {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const ContactList = () => {
 
   const token = localStorage.getItem("accessToken");
   const user = localStorage.getItem("username");
-  const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
+  const [successMessage, setSuccessMessage] = useState(""); 
   const [error, setError] = useState("");
   let [state, setState] = useState({ loading: false, contacts: [], errorMessage: '' });
 
@@ -27,7 +29,14 @@ const ContactList = () => {
         }
     }, []);
 
-    let {loading, contacts, errorMessage} = state;
+   let {loading, contacts, errorMessage} = state; 
+    const handleEdit = async (event) => {
+      //event.preventDefault(); // Prevent form submission from reloading the page
+      console.log("Editing Contact ID: ", event);
+      // Navigate to Edit Contact Page
+      localStorage.setItem("editContactId", event);    
+      navigate(`/EditContact/${event}`);
+    }
 
   return (
     <div>
@@ -91,7 +100,7 @@ const ContactList = () => {
                           </div>
                           <div className="col-md-1 float-sm-left">
                             {/* <Link to={`/contacts/view/:contactId`} className="btn btn-warning my-1"><i className="fa fa-eye" /></Link> */}
-                                <Link to={`/contacts/edit/${contact.id}`} className="btn btn-primary my-1"><i className="fa fa-pen" /></Link>
+                                <Link to={`/EditContact`} onClick={() => handleEdit(contact._id)} className="btn btn-primary my-1"><i className="fa fa-pen" /></Link>
                                 <button className="btn btn-danger my-1"><i className="fa fa-trash" /></button>
                           </div>
                         </div>

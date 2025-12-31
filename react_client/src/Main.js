@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Main() {
     const navigate = useNavigate();
-    
+    console.log("In Main Component"); 
     const [email,setEmail] = useState(""); 
     const [successMessage, setSuccessMessage] = useState("");
     const [error, setError] = useState("");
