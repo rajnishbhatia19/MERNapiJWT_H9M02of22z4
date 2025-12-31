@@ -29,6 +29,43 @@ const ContactList = () => {
         }
     }, []);
 
+    let clickDelete = async (contactId) => {
+      try { 
+          console.log("Deleting Contact with ID: ", contactId);
+              const response = await axios.delete(`http://localhost:5001/api/contacts/${contactId}`, 
+              {headers: {'Authorization': `Bearer ${token}`}})
+            .then((axiosresponse) => 
+            {
+              console.log("Delete Contact Response: ", axiosresponse.data);
+              setState({...state, contacts: state.contacts.filter(contact => contact._id !== contactId)});
+            });
+            console.log(`Contact Deletion successful for ID: ${contactId}`);
+          } catch (err) {
+            console.log(`Contact Deletion failed with ${err.message} for ID: ${contactId}`);
+        }
+    }
+
+    const  handleDelete = (contactId) => {
+      if (window.confirm("Are you sure you want to delete this contact?")) {
+        clickDelete(contactId);
+      }
+    }
+    
+    let clickExit = () => {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("username");
+      localStorage.removeItem("loggedInUserEmail");
+      localStorage.removeItem("totalContacts");
+      localStorage.removeItem("contacts");
+      navigate('/');
+    }
+
+    const  handleLogout = () => {
+      if (window.confirm("Are you sure you want to exit?")) {
+        clickExit();
+      }
+    }
+
    let {loading, contacts, errorMessage} = state; 
     const handleEdit = async (event) => {
       //event.preventDefault(); // Prevent form submission from reloading the page
@@ -59,12 +96,12 @@ const ContactList = () => {
               <form className="row">
                 <div className="col">
                   <div className="mb-2">
-                    <input type="text" className="form-control" placeholder="Search Contacts..." />
+                    {/*<input type="text" name="text" value={query.text} onChange={searchContacts} className="form-control" placeholder="Search Contacts..." />*/}
                   </div>
                 </div>
                 <div className="col">
                   <div className="mb-2">
-                    <input type="submit" className="btn btn-outline-dark" value="Search" />
+                    <input type="button" name="logout" onClick={() => handleLogout()} className="btn btn-danger" value="Logout" />
                   </div>
                 </div>
               </form>
@@ -101,7 +138,7 @@ const ContactList = () => {
                           <div className="col-md-1 float-sm-left">
                             {/* <Link to={`/contacts/view/:contactId`} className="btn btn-warning my-1"><i className="fa fa-eye" /></Link> */}
                                 <Link to={`/EditContact`} onClick={() => handleEdit(contact._id)} className="btn btn-primary my-1"><i className="fa fa-pen" /></Link>
-                                <button className="btn btn-danger my-1"><i className="fa fa-trash" /></button>
+                                <button className="btn btn-danger my-1" onClick={() => handleDelete(contact._id)}><i className="fa fa-trash" /></button>
                           </div>
                         </div>
                       </div>
